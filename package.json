@@ -4,7 +4,7 @@
   "description": "Professional Boilerplate for Vanilla.js Web Apps",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --mode development --port 3000 --open",
+    "start": "NODE_OPTIONS='--openssl-legacy-provider' webpack-dev-server --mode development --port 3000 --open",
     "build": "webpack --mode development --verbose --colors --display-error-details",
     "deploy": "node deploy-to-github.js"
   },
@@ -32,7 +32,8 @@
   "homepage": "https://github.com/4GeeksAcademy/vanillajs-hello#readme",
   "dependencies": {
     "@popperjs/core": "^2.10.1",
-    "bootstrap": "^5.1.1"
+    "bootstrap": "^5.1.1",
+    "bootstrap-icons": "^1.10.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
