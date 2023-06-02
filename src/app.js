@@ -14,33 +14,29 @@ let cardNumber = document.querySelector(".card .cardNumber");
 let button = document.querySelector("#newCard");
 let manualHeight = document.querySelector("#txtHeight");
 let manualWidth = document.querySelector("#txtWidth");
-let manualCreate = document.querySelector("#manualSizeCard");
+let resizeCard = document.querySelector("#resizeCard");
 
 window.onload = function() {
   //write your code here
   createCard();
 };
 
-button /
-  addEventListener("click", function() {
-    createCard();
-  });
+button.addEventListener("click", function() {
+  createCard();
+});
 
 setInterval(() => {
   createCard();
 }, 5000);
 
-manualCreate.addEventListener("click", function() {
+resizeCard.addEventListener("click", function() {
   let height = manualHeight.value;
   let width = manualWidth.value;
-  resizeCard(height, width);
-  createCard();
+  document.querySelector(".card").style.height = height;
+  document.querySelector(".card").style.width = width;
+  console.log("height:" + document.querySelector(".card").style.height);
+  console.log("width:" + document.querySelector(".card").style.width);
 });
-
-function resizeCard(height, width) {
-  card.style.height = height + "px";
-  card.style.width = width + "px";
-}
 
 function createCard() {
   let suit = Math.floor(Math.random() * 4) + 1;
