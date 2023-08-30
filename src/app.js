@@ -1,83 +1,144 @@
-/* eslint-disable */
 import "bootstrap";
 import "./style.css";
 
-import "./assets/img/rigo-baby.jpg";
-import "./assets/img/4geeks.ico";
-import { Alert } from "bootstrap";
-
-let card = document.querySelector(".card");
 let icono = "";
-let cardTop = document.querySelector(".card .cardTop");
-let cardBot = document.querySelector(".card .cardBot");
-let cardNumber = document.querySelector(".card .cardNumber");
-let button = document.querySelector("#newCard");
-let manualHeight = document.querySelector("#txtHeight");
-let manualWidth = document.querySelector("#txtWidth");
-let resizeCard = document.querySelector("#resizeCard");
+let ordenado = document.querySelector("#ordenadasContainer");
+let intermedios = document.querySelector("#intermedios");
+let container = document.querySelector("#cardContainer");
+let cardsToDraw = document.querySelector("#txtAmount");
+let btnBubSort = document.querySelector("#bubbleSort");
+let btnSelSort = document.querySelector("#selectionSort");
+let btnDraw = document.querySelector("#drawCards");
+let listaCartas = [];
+let listaOrdenada = [];
 
-window.onload = function() {
-  //write your code here
-  createCard();
-};
+window.onload = function() {};
 
-button.addEventListener("click", function() {
-  createCard();
+btnSelSort.addEventListener("click", function() {
+  listaOrdenada = selSort(listaCartas);
+  buildCard(listaOrdenada, ordenado);
 });
 
-setInterval(() => {
-  createCard();
-}, 5000);
-
-resizeCard.addEventListener("click", function() {
-  let height = manualHeight.value;
-  let width = manualWidth.value;
-  document.querySelector(".card").style.height = height;
-  document.querySelector(".card").style.width = width;
-  console.log("height:" + document.querySelector(".card").style.height);
-  console.log("width:" + document.querySelector(".card").style.width);
+btnBubSort.addEventListener("click", function() {
+  listaOrdenada = bubSort(listaCartas);
+  buildCard(listaOrdenada, ordenado);
 });
 
-function createCard() {
-  let suit = Math.floor(Math.random() * 4) + 1;
-  let number = Math.floor(Math.random() * 13) + 1;
-  if (number == 1) {
-    number = "A";
-  } else if (number == 11) {
-    number = "J";
-  } else if (number == 12) {
-    number = "Q";
-  } else if (number == 13) {
-    number = "K";
-  }
+btnDraw.addEventListener("click", function() {
+  ordenado.innerHTML = "";
+  intermedios.innerHTML = "";
+  container.innerHTML = "";
+  let numToDraw = cardsToDraw.value;
+  listaCartas = createCard(numToDraw);
+  buildCard(listaCartas, container);
+});
 
-  if (suit == 1) {
-    card.style = "color: red";
-    suit = "diamonds";
-    icono = '<i class="bi bi-suit-diamond-fill"></i>';
-    cardTop.innerHTML = icono;
-    cardBot.innerHTML = icono;
-    cardNumber.innerHTML = number;
-  } else if (suit == 2) {
-    card.style = "color: black";
-    suit = "clubs";
-    icono = '<i class="bi bi-suit-club-fill"></i>';
-    cardTop.innerHTML = icono;
-    cardBot.innerHTML = icono;
-    cardNumber.innerHTML = number;
-  } else if (suit == 3) {
-    card.style = "color: red";
-    suit = "hearts";
-    icono = '<i class="bi bi-suit-heart-fill"></i>';
-    cardTop.innerHTML = icono;
-    cardBot.innerHTML = icono;
-    cardNumber.innerHTML = number;
-  } else if (suit == 4) {
-    card.style = "color: black";
-    suit = "spades";
-    icono = '<i class="bi bi-suit-spade-fill"></i>';
-    cardTop.innerHTML = icono;
-    cardBot.innerHTML = icono;
-    cardNumber.innerHTML = number;
+function numero(num) {
+  return num == 1
+    ? "A"
+    : num == 11
+    ? "J"
+    : num == 12
+    ? "Q"
+    : num == 13
+    ? "K"
+    : num;
+}
+
+function buildCard(listadoNumeros, contenedor) {
+  contenedor.innerHTML = "";
+  listadoNumeros.forEach(arr => {
+    let card = document.createElement("div");
+    let cardTop = document.createElement("div");
+    let cardBot = document.createElement("div");
+    let cardNumber = document.createElement("div");
+    card.classList.add("card");
+    cardTop.classList.add(".card", ".cardTop");
+    cardNumber.classList.add(".card", ".cardNumber");
+    cardBot.classList.add(".card", ".cardBot");
+    card.appendChild(cardTop);
+    card.appendChild(cardNumber);
+    card.appendChild(cardBot);
+    if (arr.suit == 1) {
+      card.style = "color: red";
+      icono = '<i class="bi bi-suit-diamond-fill"></i>';
+      cardTop.innerHTML = icono;
+      cardBot.innerHTML = icono;
+      cardNumber.innerHTML = numero(arr.number);
+    } else if (arr.suit == 2) {
+      card.style = "color: black";
+      icono = '<i class="bi bi-suit-club-fill"></i>';
+      cardTop.innerHTML = icono;
+      cardBot.innerHTML = icono;
+      cardNumber.innerHTML = numero(arr.number);
+    } else if (arr.suit == 3) {
+      card.style = "color: red";
+      icono = '<i class="bi bi-suit-heart-fill"></i>';
+      cardTop.innerHTML = icono;
+      cardBot.innerHTML = icono;
+      cardNumber.innerHTML = numero(arr.number);
+    } else if (arr.suit == 4) {
+      card.style = "color: black";
+      icono = '<i class="bi bi-suit-spade-fill"></i>';
+      cardTop.innerHTML = icono;
+      cardBot.innerHTML = icono;
+      cardNumber.innerHTML = numero(arr.number);
+    }
+    contenedor.appendChild(card);
+  });
+}
+
+function createCard(cartas) {
+  let listaCartas = [];
+  for (let i = 0; i < cartas; i++) {
+    let suit = Math.floor(Math.random() * 4) + 1;
+    let number = Math.floor(Math.random() * 13) + 1;
+    listaCartas.push({ suit: suit, number: number });
   }
+  return listaCartas;
+}
+
+function selSort(original) {
+  let arr = [...original];
+  var length = arr.length;
+  for (var i = 0; i < length; i++) {
+    var min = {
+      value: arr[i],
+      index: i
+    };
+    for (var j = i + 1; j < length; j++) {
+      if (arr[j].number < min.value.number) {
+        min.value = arr[j];
+        min.index = j;
+      }
+    }
+    if (min.value != arr[i]) {
+      var k = arr[i];
+      arr[i] = min.value;
+      arr[min.index] = k;
+      buildCard(arr, intermedios);
+    }
+  }
+  return arr;
+}
+
+function bubSort(original) {
+  let arr = [...original];
+  for (var i = 0; i < arr.length; i++) {
+    // Last i elements are already in place
+    for (var j = 0; j < arr.length - i - 1; j++) {
+      // Checking if the item at present iteration
+      // is greater than the next iteration
+      if (arr[j].number > arr[j + 1].number) {
+        // If the condition is true
+        // then swap them
+        buildCard(arr, intermedios);
+        var temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
+    }
+  }
+  return arr;
+  // Print the sorted array
 }

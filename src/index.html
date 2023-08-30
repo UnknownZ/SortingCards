@@ -14,19 +14,19 @@
 
   <body>
     <div class="container-fluid text-center">
-      <div class="card">
-        <div class="cardTop"></div>
-        <div class="cardNumber"></div>
-        <div class="cardBot"></div>
+      <div class="contenedores">
+        <div class="cardContainer" id="cardContainer"></div>
+        <div class="intermedios" id="intermedios"></div>
+        <div class="ordenadasContainer" id="ordenadasContainer"></div>
       </div>
-      <input type="button" id="newCard" value="Generate new" /><br />
-      <input type="text" id="txtHeight" placeholder="height" />
-      <input type="text" id="txtWidth" placeholder="width" />
+      <input type="button" id="drawCards" value="Draw cards" /><br />
+      <input type="text" id="txtAmount" placeholder="cards to draw" /><br />
       <input
         type="button"
-        id="resizeCard"
-        value="Generate with custom size"
+        id="selectionSort"
+        value="Selection sort cards"
       /><br />
+      <input type="button" id="bubbleSort" value="Bubble sort cards" /><br />
     </div>
     <script src="/app.js"></script>
   </body>

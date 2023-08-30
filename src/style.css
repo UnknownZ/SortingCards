@@ -3,12 +3,25 @@ body {
   background-color: #35654d;
 }
 
+.intermedios {
+  display: flex;
+}
+
+.ordenadasContainer {
+  display: flex;
+}
+
+.cardContainer {
+  display: flex;
+}
+
 .card {
   height: 120px;
   width: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: white;
 }
 
 .card .cardTop {
