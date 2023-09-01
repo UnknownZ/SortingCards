@@ -10,18 +10,18 @@ let btnBubSort = document.querySelector("#bubbleSort");
 let btnSelSort = document.querySelector("#selectionSort");
 let btnDraw = document.querySelector("#drawCards");
 let listaCartas = [];
-let listaOrdenada = [];
+let listaPasos = [];
 
 window.onload = function() {};
 
 btnSelSort.addEventListener("click", function() {
-  listaOrdenada = selSort(listaCartas);
-  buildCard(listaOrdenada, ordenado);
+  listaPasos = selSort(listaCartas);
+  mostrarPasos(listaPasos);
 });
 
 btnBubSort.addEventListener("click", function() {
-  listaOrdenada = bubSort(listaCartas);
-  buildCard(listaOrdenada, ordenado);
+  listaPasos = bubSort(listaCartas);
+  mostrarPasos(listaPasos);
 });
 
 btnDraw.addEventListener("click", function() {
@@ -99,6 +99,7 @@ function createCard(cartas) {
 }
 
 function selSort(original) {
+  let temp = [];
   let arr = [...original];
   var length = arr.length;
   for (var i = 0; i < length; i++) {
@@ -116,13 +117,23 @@ function selSort(original) {
       var k = arr[i];
       arr[i] = min.value;
       arr[min.index] = k;
-      buildCard(arr, intermedios);
+      temp.push(arr);
     }
   }
-  return arr;
+  return temp;
+}
+
+function mostrarPasos(pasos) {
+  pasos.forEach(paso => {
+    let divPaso = document.createElement("div");
+    divPaso.classList.add("intermedios");
+    buildCard(paso, divPaso);
+    intermedios.appendChild(divPaso);
+  });
 }
 
 function bubSort(original) {
+  let tempArr = [];
   let arr = [...original];
   for (var i = 0; i < arr.length; i++) {
     // Last i elements are already in place
@@ -132,13 +143,13 @@ function bubSort(original) {
       if (arr[j].number > arr[j + 1].number) {
         // If the condition is true
         // then swap them
-        buildCard(arr, intermedios);
         var temp = arr[j];
         arr[j] = arr[j + 1];
         arr[j + 1] = temp;
+        tempArr.push(arr);
       }
     }
   }
-  return arr;
+  return tempArr;
   // Print the sorted array
 }

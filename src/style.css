@@ -4,6 +4,10 @@ body {
 }
 
 .intermedios {
+  display: block;
+}
+
+.intermedios .intermedios {
   display: flex;
 }
 
