@@ -16,11 +16,13 @@ window.onload = function() {};
 
 btnSelSort.addEventListener("click", function() {
   listaPasos = selSort(listaCartas);
+  console.log(listaPasos);
   mostrarPasos(listaPasos);
 });
 
 btnBubSort.addEventListener("click", function() {
   listaPasos = bubSort(listaCartas);
+  console.log(listaPasos);
   mostrarPasos(listaPasos);
 });
 
@@ -99,7 +101,7 @@ function createCard(cartas) {
 }
 
 function selSort(original) {
-  let temp = [];
+  let tempArr = [];
   let arr = [...original];
   var length = arr.length;
   for (var i = 0; i < length; i++) {
@@ -117,10 +119,10 @@ function selSort(original) {
       var k = arr[i];
       arr[i] = min.value;
       arr[min.index] = k;
-      temp.push(arr);
+      tempArr.push([...arr]);
     }
   }
-  return temp;
+  return tempArr;
 }
 
 function mostrarPasos(pasos) {
@@ -135,21 +137,17 @@ function mostrarPasos(pasos) {
 function bubSort(original) {
   let tempArr = [];
   let arr = [...original];
+  console.log(arr);
+  console.log(original);
   for (var i = 0; i < arr.length; i++) {
-    // Last i elements are already in place
     for (var j = 0; j < arr.length - i - 1; j++) {
-      // Checking if the item at present iteration
-      // is greater than the next iteration
       if (arr[j].number > arr[j + 1].number) {
-        // If the condition is true
-        // then swap them
         var temp = arr[j];
         arr[j] = arr[j + 1];
         arr[j + 1] = temp;
-        tempArr.push(arr);
+        tempArr.push([...arr]);
       }
     }
   }
   return tempArr;
-  // Print the sorted array
 }
